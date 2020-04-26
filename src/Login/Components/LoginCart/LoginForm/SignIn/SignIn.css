@@ -1,0 +1,40 @@
+.card_signIn_body_form {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+.AlertStyle {
+    height: 30px;
+    line-height: 0 !important;
+}
+.MuiAlert-icon{
+    padding: 0;
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.card_signIn_body_form * {
+    margin: 0.7rem 0;
+}
+
+.links_to_signIn_password{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.links_to_forget_password{
+    justify-content: flex-end;
+    display: flex;
+    margin: 0;
+}
+.links_to_signIn {
+    display: flex;
+    justify-content: center;
+}
+.links_to_signIn span{
+    padding: 3px;
+}

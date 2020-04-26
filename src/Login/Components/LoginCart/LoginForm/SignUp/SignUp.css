@@ -1,0 +1,21 @@
+.card_signUp_body_form{
+    width: 70%;
+    height: 95%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+
+.card_signUp_body_form * {
+    margin: 0.5rem 0;
+}
+.link_to_signIn{
+    display: flex;
+    justify-content: center;
+}
+.link_to_signIn span{
+    padding: 3px;
+}

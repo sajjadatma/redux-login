@@ -1,0 +1,24 @@
+.card_login_body{
+    width: 50%;
+}
+.card_login_body_footer{
+    display: flex;
+    justify-content: space-around;
+}
+.card_login_body_form_footer h1{
+    margin: 0 ;
+    width: 50%;
+}
+.card_login_body_footer button {
+    margin: 0 20px;
+}
+.switchLink{
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(43, 113, 226);
+    cursor: pointer;
+}
+.switchLink:hover{
+    color:#f50057;
+    transition: color 0.2s;
+}
