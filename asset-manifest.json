@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/redux-login/static/css/main.2b1a45a3.chunk.css",
+    "main.css": "/redux-login/static/css/main.fa94af3a.chunk.css",
     "main.js": "/redux-login/static/js/main.27d3df26.chunk.js",
     "main.js.map": "/redux-login/static/js/main.27d3df26.chunk.js.map",
     "runtime-main.js": "/redux-login/static/js/runtime-main.70d85fb7.js",
@@ -8,16 +8,16 @@
     "static/js/2.2d5b7910.chunk.js": "/redux-login/static/js/2.2d5b7910.chunk.js",
     "static/js/2.2d5b7910.chunk.js.map": "/redux-login/static/js/2.2d5b7910.chunk.js.map",
     "index.html": "/redux-login/index.html",
-    "precache-manifest.c01bd3d3c9c4a8096b137d0b1ddb443e.js": "/redux-login/precache-manifest.c01bd3d3c9c4a8096b137d0b1ddb443e.js",
+    "precache-manifest.d5129bbd317197abbc7cc5c45c2e625e.js": "/redux-login/precache-manifest.d5129bbd317197abbc7cc5c45c2e625e.js",
     "service-worker.js": "/redux-login/service-worker.js",
-    "static/css/main.2b1a45a3.chunk.css.map": "/redux-login/static/css/main.2b1a45a3.chunk.css.map",
+    "static/css/main.fa94af3a.chunk.css.map": "/redux-login/static/css/main.fa94af3a.chunk.css.map",
     "static/js/2.2d5b7910.chunk.js.LICENSE.txt": "/redux-login/static/js/2.2d5b7910.chunk.js.LICENSE.txt",
     "static/media/LoginPicture.css": "/redux-login/static/media/Login_card_image.03db6b69.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.70d85fb7.js",
     "static/js/2.2d5b7910.chunk.js",
-    "static/css/main.2b1a45a3.chunk.css",
+    "static/css/main.fa94af3a.chunk.css",
     "static/js/main.27d3df26.chunk.js"
   ]
 }
