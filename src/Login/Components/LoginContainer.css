@@ -1,13 +1,8 @@
 .container {
-    /* background: url('./image//login_background.jpg'); */
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh;
     background-color: #896EB5
-    ;
-    /* background-attachment: fixed;
-    background-size: cover;
-    background-position: center; */
 }

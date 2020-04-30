@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import "./SignUp.css";
 import { connect } from "react-redux";
-import TextField from "@material-ui/core/TextField";
+import InputText from "../../../../../UI/input";
 import Button from "@material-ui/core/Button";
 import Fade from "@material-ui/core/Fade";
-import {
-  validation,
-  emptyInput,
-} from "../../../../../Redux/Actions/FormValidationAction";
 import { register } from "../../../../../Redux/Actions/registerAction";
 import SuccessAlert from "../../../../../UI/successAlert";
 import ErrorAlert from "../../../../../UI/errorAlert";
@@ -16,16 +12,9 @@ class SignUp extends Component {
     name: null,
     email: null,
     password: null,
-    repeatPassword: null,
   };
   onChanges = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    this.props.validation(e.target.type, e.target.value);
-  };
-  onEmpty = () => {
-    Object.values(this.state).map((item) => {
-     return this.props.emptyInput(item);
-    });
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -33,28 +22,32 @@ class SignUp extends Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      repeatPassword: this.state.repeatPassword,
     };
     if (
       this.state.email === null &&
-      this.state.email === null &&
-      this.state.password === null
+      this.state.password === null &&
+      this.state.password ===null
     ) {
-      this.onEmpty();
+      this.setState({
+        name: "",
+        email: "",
+        password: "",
+      });
     }
-    const { email, password, text } = this.props.validInputs;
+    const { email, password, name } = this.props.validation;
     if (
-      email.valid &&
-      password.valid &&
-      text.valid &&
-      this.state.password.value === this.state.repeatPassword.value
+      email !== undefined &&
+      email.valid === true &&
+      password !== undefined &&
+      password.valid === true &&
+      name !== undefined &&
+      name.valid === true
     ) {
       this.props.register(RegisterValues);
     }
   };
 
   render() {
-    const { email, password, text, isEmpty } = this.props.validInputs;
     const { registered, error } = this.props.reg;
     const successAlert = registered ? (
       <SuccessAlert title={"Sign in Successfully."} />
@@ -69,55 +62,31 @@ class SignUp extends Component {
           <hr />
           {successAlert}
           {errorAlert}
-          <TextField
-            error={text.validError || isEmpty ? true : null}
+          <InputText
+            event={this.onChanges}
             name="name"
-            id="name"
-            label="Name"
-            size="small"
-            variant="outlined"
-            defaultValue={this.state.name}
-            onChange={this.onChanges}
+            value={this.state.name}
+            type="name"
+            min={3}
+            max={30}
           />
 
-          <TextField
-            error={email.validError || isEmpty ? true : null}
+          <InputText
+            event={this.onChanges}
             name="email"
-            id="email"
-            label="Email"
-            size="small"
+            value={this.state.email}
             type="email"
-            variant="outlined"
-            defaultValue={this.state.email}
-            onChange={this.onChanges}
+            min={3}
+            max={100}
           />
-          <TextField
-            error={password.validError || isEmpty ? true : null}
+             <InputText
+            event={this.onChanges}
             name="password"
-            size="small"
-            id="password"
-            label="Password"
+            value={this.state.password}
             type="password"
-            variant="outlined"
-            defaultValue={this.state.password}
-            onChange={this.onChanges}
+            min={6}
+            max={25}
           />
-          <TextField
-            error={
-              this.state.password !== this.state.repeatPassword || isEmpty
-                ? true
-                : false
-            }
-            name="repeatPassword"
-            size="small"
-            id="repaeatPassword"
-            label="Repeat Password"
-            type="password"
-            variant="outlined"
-            defaultValue={this.state.repeatPassword}
-            onChange={this.onChanges}
-          />
-
           <Button
             onClick={this.onSubmit}
             size="small"
@@ -143,10 +112,8 @@ class SignUp extends Component {
 
 const mapStateToProps = (state) => ({
   reg: state.reg,
-  validInputs: state.validation,
+  validation: state.validation,
 });
 export default connect(mapStateToProps, {
   register,
-  validation,
-  emptyInput,
 })(SignUp);

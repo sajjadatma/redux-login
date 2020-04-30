@@ -18,7 +18,7 @@ export const Forget_Password_FETCH_SUCESSFULL = 'Forget_Password_FETCH_SUCESSFUL
 export const Forget_Password_FETCH_FAILURE = 'Forget_Password_FETCH_FAILURE'
 
 // Validation
-export const EMPTY_INPUT = 'EMPTY_INPUT'
-export const TEXT_VALIDATION = 'TEXT_VALIDATION'
-export const EMAIL_VALIDATION = 'EMAIL_VALIDATION'
-export const PASSWORD_VALIDATION = 'PASSWORD_VALIDATION'
+
+export const CHECK_REQUIRED = 'CHECK_REQUIRED'
+export const CHECK_LENGTH = 'CHECK_LENGTH'
+export const CHECK_EMAIL_VALIDATION = 'CHECK_EMAIL_VALIDATION'

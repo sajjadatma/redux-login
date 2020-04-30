@@ -1,94 +1,72 @@
-import {
-  TEXT_VALIDATION,
-  EMAIL_VALIDATION,
-  PASSWORD_VALIDATION,
-  EMPTY_INPUT
-} from "../Types/Types";
+import { CHECK_REQUIRED, CHECK_LENGTH,CHECK_EMAIL_VALIDATION } from "../Types/Types";
 
-const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-
-const inintialState = {
-  text: {},
-  email: {},
-  password: {},
-  isEmpty:null
-};
-const validation = (state = inintialState, action) => {
+var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validation = (state = {}, action) => {
   switch (action.type) {
-    case EMPTY_INPUT:
-      if ( action.value === null || action.value === "") {
+    case CHECK_REQUIRED:
+      if (action.value.trim() !== "" && action.value !== null) {
         return {
           ...state,
-          isEmpty:true
-        }
-      } else {
+          [action.input]: {
+            input: action.input,
+            valid: true,
+            validError: false,
+          },
+        };
+      } else if(action.value === "") {
         return {
           ...state,
-          isEmpty:false
-        }
-      }
-    case TEXT_VALIDATION:
-      if (action.value === null || action.value.length < 3) {
-        return {
-          ...state,
-          text: {
-            isEmpty: false,
+          [action.input]: {
+            input: action.input,
             valid: false,
             validError: true,
-            textError: "minimum 3 characaters required",
+            textError: `${action.input.charAt(0).toUpperCase() + action.input.slice(1)} is Required`,
+          },
+        };
+      }
+    case CHECK_LENGTH:
+      if (action.value.trim().length < action.min) {
+        return {
+          ...state,
+          [action.input]: {
+            valid: false,
+            validError: true,
+            textError: `${action.input.charAt(0).toUpperCase() + action.input.slice(1)} must be at least ${action.min} characters`,
+          },
+        };
+      } else if (action.value.trim().length >= action.max) {
+        return {
+          ...state,
+          [action.input]: {
+            valid: false,
+            validError: true,
+            textError: `${action.input} must be ${action.max} characters`,
           },
         };
       } else {
         return {
           ...state,
-          text: {
-            isEmpty: false,
+          [action.input]: {
             valid: true,
             validError: false,
             textError: {},
           },
         };
       }
-    case EMAIL_VALIDATION:
-      if (!emailRegex.test(action.value)) {
+    case CHECK_EMAIL_VALIDATION:
+      if (!emailRegex.test(action.value.trim())) {
         return {
           ...state,
-          email: {
-            isEmpty: false,
+          [action.input]: {
             valid: false,
             validError: true,
-            textError:"Invalid Email Address"
+            textError: `Email Not Valid!`,
           },
         };
       } else {
         return {
           ...state,
-          email: {
-            isEmpty: false,
-            valid: true,
-            validError: false,
-            textError: {},
-          },
-        };
-      }
-    case PASSWORD_VALIDATION:
-      if (action.value.length < 6) {
-        return {
-          ...state,
-          password: {
-            isEmpty: false,
-            valid: false,
-            validError: true,
-            textError:"Minimum 6 Characaters Required",
-          },
-        };
-      } else {
-        return {
-          ...state,
-          password: {
-            isEmpty: false,
+          [action.input]: {
             valid: true,
             validError: false,
             textError: {},

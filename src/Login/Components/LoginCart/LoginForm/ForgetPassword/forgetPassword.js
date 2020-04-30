@@ -3,27 +3,19 @@ import "./ForgetPassword.css";
 import { connect } from "react-redux";
 import { resetPassword } from "../../../../../Redux/Actions/ForgetPasswordAction";
 import Fade from "@material-ui/core/Fade";
-import {
-  validation,
-  emptyInput,
-} from "../../../../../Redux/Actions/FormValidationAction";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import SuccessAlert from "../../../../../UI/successAlert";
 import ErrorAlert from "../../../../../UI/errorAlert";
+import InputText from "../../../../../UI/input";
+
 class ForgetPassword extends Component {
   state = {
     email: null,
   };
-  onEmpty = () => {
-    Object.values(this.state).map((item) => {
-      return this.props.emptyInput(item);
-    });
-  };
+
   onChanges = (e) => {
-    const InputName = e.target.name;
     this.setState({ [e.target.name]: e.target.value });
-    this.props.validation(InputName, e.target.value);
   };
 
   onSubmit = (e) => {
@@ -32,16 +24,17 @@ class ForgetPassword extends Component {
       email: this.state.email,
     };
     if (this.state.email === null) {
-      this.onEmpty();
+      this.setState({
+        email: "",
+      });
     }
-    const { email } = this.props.validInputs;
-    if (email.valid) {
+    const { email } = this.props.validation;
+    if (email !== undefined && email.valid === true) {
       this.props.resetPassword(resetValues);
     }
   };
   render() {
     const { resetSuccess, error } = this.props.reset;
-    const { email, isEmpty } = this.props.validInputs;
     const successAlert = resetSuccess ? (
       <SuccessAlert title={"Email Sent Successfully."} />
     ) : null;
@@ -56,16 +49,13 @@ class ForgetPassword extends Component {
           <hr />
           {successAlert}
           {errorAlert}
-          <TextField
+          <InputText
+            event={this.onChanges}
             name="email"
-            error={email.validError || isEmpty ? true : null}
-            id="standard-email-input"
-            label="Email"
-            type="text"
-            size="small"
-            variant="outlined"
-            defaultValue={this.state.email}
-            onChange={this.onChanges}
+            value={this.state.email}
+            type="email"
+            min={3}
+            max={100}
           />
           <Button
             onClick={this.onSubmit}
@@ -97,10 +87,8 @@ class ForgetPassword extends Component {
 }
 const mapStateToProps = (state) => ({
   reset: state.reset,
-  validInputs: state.validation,
+  validation: state.validation,
 });
 export default connect(mapStateToProps, {
   resetPassword,
-  validation,
-  emptyInput,
 })(ForgetPassword);

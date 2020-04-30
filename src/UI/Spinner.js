@@ -27,8 +27,6 @@ class Spinner extends Component {
       },
       function (error) {
         self.props.loading(false);
-        console.log(error.toJSON());
-        
         return Promise.reject(error);
       }
     );

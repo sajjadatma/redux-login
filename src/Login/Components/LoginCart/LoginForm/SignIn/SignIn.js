@@ -1,51 +1,49 @@
 import React, { Component } from "react";
 import "./SignIn.css";
 import { connect } from "react-redux";
-import Fade from "@material-ui/core/Fade";
 import { fetchLogin } from "../../../../../Redux/Actions/loginAction";
-import {
-  validation,
-  emptyInput,
-} from "../../../../../Redux/Actions/FormValidationAction";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import SuccessAlert from "../../../../../UI/successAlert";
 import ErrorAlert from "../../../../../UI/errorAlert";
+import InputText from "../../../../../UI/input";
+import Fade from "@material-ui/core/Fade";
 
 class SignIn extends Component {
   state = {
     email: null,
     password: null,
   };
-
-  onEmpty = () => {
-    Object.values(this.state).map((item) => {
-    return this.props.emptyInput(item);
-    });
-  };
   onChanges = (e) => {
-    const InputName = e.target.name;
-    this.setState({ [e.target.name]: e.target.value});
-    this.props.validation(InputName, e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault();
-    const loginValues = {
+    const SignInValues = {
       email: this.state.email,
       password: this.state.password,
     };
+
+    const { email, password } = this.props.validation;
+
     if (this.state.email === null && this.state.password === null) {
-      this.onEmpty();
+      this.setState({
+        email: "",
+        password: "",
+      });
     }
-    const { email, password } = this.props.validInputs;
-    if (email.valid === true && password.valid === true) {
-      this.props.fetchLogin(loginValues);
+    if (
+      email !== undefined &&
+      email.valid === true &&
+      password !== undefined &&
+      password.valid === true
+    ) {
+      this.props.fetchLogin(SignInValues);
     }
   };
+
   render() {
-    console.log(this.props.validInputs);
+
     const { loggedIn, error } = this.props.login;
-    const { email, password, isEmpty } = this.props.validInputs;
     const successAlert = loggedIn ? (
       <SuccessAlert title={"Sign in Successfully."} />
     ) : null;
@@ -59,36 +57,22 @@ class SignIn extends Component {
           <hr />
           {successAlert}
           {errorAlert}
-          <TextField
-            error={email.validError || isEmpty ? true : null}
+          <InputText
+            event={this.onChanges}
             name="email"
-            helperText={email.validError ? email.textError : null}
-            id="standard-email-input"
-            label="Email"
+            value={this.state.email}
             type="email"
-            size="small"
-            variant="outlined"
-            defaultValue={this.state.email}
-            onChange={this.onChanges}
+            min={3}
+            max={100}
           />
-
-          <TextField
-            error={password.validError || isEmpty ? true : null}
+          <InputText
+            event={this.onChanges}
             name="password"
-            id="standard-password-input"
-            helperText={
-              password.validError || this.state.empty
-                ? password.textError
-                : null
-            }
-            label="Password"
+            value={this.state.password}
             type="password"
-            size="small"
-            variant="outlined"
-            defaultValue={this.state.password}
-            onChange={this.onChanges}
+            min={8}
+            max={100}
           />
-
           <Button
             onClick={this.onSubmit}
             size="small"
@@ -125,10 +109,8 @@ class SignIn extends Component {
 }
 const mapStateToProps = (state) => ({
   login: state.Login,
-  validInputs: state.validation,
+  validation: state.validation,
 });
 export default connect(mapStateToProps, {
   fetchLogin,
-  validation,
-  emptyInput,
 })(SignIn);

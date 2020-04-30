@@ -1,45 +1,28 @@
-import {
-  TEXT_VALIDATION,
-  EMAIL_VALIDATION,
-  PASSWORD_VALIDATION,
-  EMPTY_INPUT,
-} from "../Types/Types";
+import { CHECK_LENGTH, CHECK_REQUIRED,CHECK_EMAIL_VALIDATION } from "../Types/Types";
 
-export const validation = (inputType, inputValue) => (dispatch) => {
-  if (inputType === "text") {
-    dispatch({
-      type: TEXT_VALIDATION,
-      input: inputType,
-      value: inputValue,
-    });
-  } else if (inputType === "email") {
-    dispatch({
-      type: EMAIL_VALIDATION,
-      input: inputType,
-      value: inputValue,
-    });
-  } else if (inputType === "password") {
-    dispatch({
-      type: PASSWORD_VALIDATION,
-      input: inputType,
-      value: inputValue,
-    });
-  }
-  if (inputValue !== undefined) {
-    dispatch({
-      type: EMPTY_INPUT,
-      value: inputValue,
-    });
-  }
+export const checkRequired = (inputName, inputValue) => dispatch => {
+  
+  dispatch({
+    type: CHECK_REQUIRED,
+    input: inputName,
+    value: inputValue,
+  });
+};
+export const checkLength = (inputName, inputValue, min, max) => dispatch => {
+  dispatch({
+    type: CHECK_LENGTH,
+    input: inputName,
+    value: inputValue,
+    min: min,
+    max: max,
+  });
 };
 
-export const emptyInput = (inputValue) => (dispatch) => {
-  console.log(inputValue);
+export const checkEmailValidation = (inputName, inputValue) => dispatch => {
   
-  if (inputValue !== undefined) {
-    dispatch({
-      type: EMPTY_INPUT,
-      value: inputValue,
-    });
-  }
-}
+  dispatch({
+    type: CHECK_EMAIL_VALIDATION,
+    input: inputName,
+    value: inputValue,
+  });
+};
